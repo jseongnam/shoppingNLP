@@ -27,9 +27,9 @@ urls = ['https://www.ssg.com/disp/category.ssg?ctgId=6000193710&page=',
 'https://www.ssg.com/disp/category.ssg?ctgId=6000193716&page=',
 'https://www.ssg.com/disp/category.ssg?ctgId=6000193713&page=']
 for s in range (1, 2): # 중카테고리 반복 (카테고리 리스트 안에 URL 뒷부분 변수 기입해서 반복문)
-    for i in range(len(urls)):  # url
-        for k in range(1,21):   #page
-            url = urls[i]+str(k)
+    for i in range(len(urls)-2):  # url
+        for k in range(1,4):   #page
+            url = urls[i+2]+str(k)
             print("url:",url)
             driver.get(url)
             for j in range(1, 81): # product_count
@@ -68,16 +68,16 @@ for s in range (1, 2): # 중카테고리 반복 (카테고리 리스트 안에 U
                             continue
                     except:
                         print('none')
-                    for k in range(1, 10):
+                    for t in range(1, 10):
                         try:
                             time.sleep(0.5)
-                            btn_reply = '//*[@id="comment_navi_area"]/a[{}]'.format(k)  # k번째 리뷰 버튼 xpath
+                            btn_reply = '//*[@id="comment_navi_area"]/a[{}]'.format(t)  # k번째 리뷰 버튼 xpath
                             clicked_btn_reply = driver.find_element('xpath', btn_reply).send_keys(Keys.ENTER)
                             for l in range(1, 20, 2):
                                 try:
                                     reply = '//*[@id="cdtl_cmt_tbody"]/tr[{}]/td[1]/div/a/div[1]/span'.format(l)    #댓글 xpath
                                     reply = driver.find_element('xpath', reply).text
-                                    # print(reply)
+                                    print(reply)
                                     reply = re.compile('[^가-힣]').sub(' ', reply)
                                     replys.append(reply)
                                     time.sleep(0.5)
@@ -92,14 +92,15 @@ for s in range (1, 2): # 중카테고리 반복 (카테고리 리스트 안에 U
                 driver.back()
                 time.sleep(3)
 
-            #1번째마다 저장
-            df_section_reply = pd.DataFrame(replys, columns=['reply'])
-            df_section_reply['category'] = category[s]
-            df_title = pd.concat([df_reply, df_section_reply], ignore_index=True)
-            df_title.to_csv('./crawling_data/crawling_data_{}_To_{}.csv'.format(category[s], k),
-                                            index = False)
-            replys = []
-            print('debug01','k')
+            if k % 3 == 0 :#1번째마다 저장
+                df_section_reply = pd.DataFrame(replys, columns=['reply'])
+                df_section_reply['category'] = category[s]
+                df_title = pd.concat([df_reply, df_section_reply], ignore_index=True)
+                df_title.to_csv('./crawling_data/crawling_data_{}_To_{}_{}.csv'.format(category[s],i,k),
+                                                index = False)
+                replys = []
+                print('debug01',k)
+                break
 
 
 
