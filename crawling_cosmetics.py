@@ -19,12 +19,12 @@ options.add_argument("--disable-popup-blocking")
 driver = webdriver.Chrome('./chromedriver', options=options)
 df_reply = pd.DataFrame()
 replys = []
-urls = ['https://www.ssg.com/disp/category.ssg?ctgId=6000193710&page='
-'https://www.ssg.com/disp/category.ssg?ctgId=6000193714&page='
-'https://www.ssg.com/disp/category.ssg?ctgId=6000086414&page='
-'https://www.ssg.com/disp/category.ssg?ctgId=6000193711&page='
-'https://www.ssg.com/disp/category.ssg?ctgId=6000193712&page='
-'https://www.ssg.com/disp/category.ssg?ctgId=6000193716&page='
+urls = ['https://www.ssg.com/disp/category.ssg?ctgId=6000193710&page=',
+'https://www.ssg.com/disp/category.ssg?ctgId=6000193714&page=',
+'https://www.ssg.com/disp/category.ssg?ctgId=6000086414&page=',
+'https://www.ssg.com/disp/category.ssg?ctgId=6000193711&page=',
+'https://www.ssg.com/disp/category.ssg?ctgId=6000193712&page=',
+'https://www.ssg.com/disp/category.ssg?ctgId=6000193716&page=',
 'https://www.ssg.com/disp/category.ssg?ctgId=6000193713&page=']
 for s in range (2, 3): # 중카테고리 반복 (카테고리 리스트 안에 URL 뒷부분 변수 기입해서 반복문)
     for i in range(len(urls)):  # url
