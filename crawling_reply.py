@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-category = []
+category = ['fashion','cosmetics','digital']
 
 
 
@@ -20,8 +20,8 @@ driver = webdriver.Chrome('./chromedriver', options=options)
 df_reply = pd.DataFrame()
 replys = []
 
-for s in range (1, category[i]): # 중카테고리 반복 (카테고리 리스트 안에 URL 뒷부분 변수 기입해서 반복문)
-    for i in range(1, 2):  # page_count
+for s in range (1, len(category)): # 중카테고리 반복 (카테고리 리스트 안에 URL 뒷부분 변수 기입해서 반복문)
+    for i in range(1, 11):  # page_count
         url = 'https://www.ssg.com/disp/category.ssg?ctgId={}&page={}'.format(s, i)
         driver.get(url)
         for j in range(1, 81): # product_count
@@ -87,7 +87,7 @@ for s in range (1, category[i]): # 중카테고리 반복 (카테고리 리스�
 
         if i % 1 == 0:  #1번째마다 저장
             df_section_reply = pd.DataFrame(replys, columns=['reply'])
-            df_section_reply['category'] = 'Dairy'
+            df_section_reply['category'] = category[s]
             df_title = pd.concat([df_reply, df_section_reply], ignore_index=True)
             df_title.to_csv('./crawling_data/crawling_data_{}_To_{}.csv'.format(i, j),
                                     index = False)
