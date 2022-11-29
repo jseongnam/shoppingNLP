@@ -68,33 +68,38 @@ for s in range (2, 3): # 중카테고리 반복 (카테고리 리스트 안에 U
                             continue
                     except:
                         print('none')
-                    try:
-                        for l in range(2, 21, 2):
-                            try:
-                                reply = '//*[@id="cdtl_cmt_tbody"]/tr[{}]/td/div/div/div[2]/div[2]/div/div/p'.format(l)    #댓글 xpath
-                                reply = driver.find_element('xpath', reply).text
-                                print(reply)
-                                reply = re.compile('[^가-힣]').sub(' ', reply)
-                                replys.append(reply)
-                                time.sleep(0.5)
-                            except NoSuchElementException as e:
-                                print('none')
-                    except StaleElementReferenceException as r:
-                        print('none')
+                    for k in range(1, 10):
+                        try:
+                            time.sleep(0.5)
+                            btn_reply = '//*[@id="comment_navi_area"]/a[{}]'.format(k)  # k번째 리뷰 버튼 xpath
+                            clicked_btn_reply = driver.find_element('xpath', btn_reply).send_keys(Keys.ENTER)
+                            for l in range(1, 20, 2):
+                                try:
+                                    reply = '//*[@id="cdtl_cmt_tbody"]/tr[{}]/td[1]/div/a/div[1]/span'.format(l)    #댓글 xpath
+                                    reply = driver.find_element('xpath', reply).text
+                                    print(reply)
+                                    reply = re.compile('[^가-힣]').sub(' ', reply)
+                                    replys.append(reply)
+                                    time.sleep(0.5)
+                                except NoSuchElementException as e:
+                                    print('none')
+                        except StaleElementReferenceException as r:
+                            print('none')
 
-                    except NoSuchElementException as e:
-                        print('none')
+                        except NoSuchElementException as e:
+                            print('none')
 
-                    driver.back()
-                    time.sleep(3)
+                driver.back()
+                time.sleep(3)
 
-                if k % 1 == 0:  #1번째마다 저장
-                    df_section_reply = pd.DataFrame(replys, columns=['reply'])
-                    df_section_reply['category'] = category[s]
-                    df_title = pd.concat([df_reply, df_section_reply], ignore_index=True)
-                    df_title.to_csv('./crawling_data/crawling_data_{}_To_{}.csv'.format(category[s], k),
+            #1번째마다 저장
+            df_section_reply = pd.DataFrame(replys, columns=['reply'])
+            df_section_reply['category'] = category[s]
+            df_title = pd.concat([df_reply, df_section_reply], ignore_index=True)
+            df_title.to_csv('./crawling_data/crawling_data_{}_To_{}.csv'.format(category[s], k),
                                             index = False)
-                    replys = []
+            replys = []
+            print('debug01')
 
 
 
