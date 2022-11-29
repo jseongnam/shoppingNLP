@@ -26,7 +26,7 @@ urls = ['https://www.ssg.com/disp/category.ssg?ctgId=6000193710&page=',
 'https://www.ssg.com/disp/category.ssg?ctgId=6000193712&page=',
 'https://www.ssg.com/disp/category.ssg?ctgId=6000193716&page=',
 'https://www.ssg.com/disp/category.ssg?ctgId=6000193713&page=']
-for s in range (2, 3): # 중카테고리 반복 (카테고리 리스트 안에 URL 뒷부분 변수 기입해서 반복문)
+for s in range (1, 2): # 중카테고리 반복 (카테고리 리스트 안에 URL 뒷부분 변수 기입해서 반복문)
     for i in range(len(urls)):  # url
         for k in range(1,21):   #page
             url = urls[i]+str(k)
@@ -77,7 +77,7 @@ for s in range (2, 3): # 중카테고리 반복 (카테고리 리스트 안에 U
                                 try:
                                     reply = '//*[@id="cdtl_cmt_tbody"]/tr[{}]/td[1]/div/a/div[1]/span'.format(l)    #댓글 xpath
                                     reply = driver.find_element('xpath', reply).text
-                                    print(reply)
+                                    # print(reply)
                                     reply = re.compile('[^가-힣]').sub(' ', reply)
                                     replys.append(reply)
                                     time.sleep(0.5)
@@ -99,7 +99,7 @@ for s in range (2, 3): # 중카테고리 반복 (카테고리 리스트 안에 U
             df_title.to_csv('./crawling_data/crawling_data_{}_To_{}.csv'.format(category[s], k),
                                             index = False)
             replys = []
-            print('debug01')
+            print('debug01','k')
 
 
 
