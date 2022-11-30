@@ -3,7 +3,6 @@ from selenium.common.exceptions import NoSuchElementException, StaleElementRefer
 import pandas as pd
 import re
 import time
-import datetime
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,18 +12,17 @@ category = ['furniture','life','cloth']
 
 
 options = webdriver.ChromeOptions()
-# options.add_argument('headless')
 options.add_argument('lang=kr_KR')
 options.add_argument("--disable-popup-blocking")
 driver = webdriver.Chrome('./chromedriver', options=options)
 df_reply = pd.DataFrame()
 replys = []
-urls = ['https://www.ssg.com/disp/category.ssg?dispCtgId=6000173396&page=',
-        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000174583&page=',
-        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000188534&page=']
+urls = ['https://www.ssg.com/disp/category.ssg?dispCtgId=6000173396&page=',#furniture의 url
+        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000174583&page=',#life의 url
+        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000188534&page=']#cloth의 url
 
 for i in range(len(urls)):  # url
-    for k in range(2,4):   #page
+    for k in range(1,4):   #page
         url = urls[i]+str(k)
         print("url:",url)
         driver.get(url)
@@ -88,18 +86,11 @@ for i in range(len(urls)):  # url
             driver.back()
             time.sleep(3)
 
-        if k % 1 == 0 :#3번째마다 저장
-            df_section_reply = pd.DataFrame(replys, columns=['reply'])
-            df_section_reply['category'] = category[i]
-            df_title = pd.concat([df_reply, df_section_reply], ignore_index=True)
-            df_title.to_csv('./crawling_data/crawling_data_{}_To_{}.csv'.format(category[i],k),
+
+        df_section_reply = pd.DataFrame(replys, columns=['reply'])
+        df_section_reply['category'] = category[i]
+        df_title = pd.concat([df_reply, df_section_reply], ignore_index=True)
+        df_title.to_csv('./crawling_data/crawling_data_{}_To_{}.csv'.format(category[i],k),
                                             index = False)
-            replys = []
-            print('debug01',k)
-
-
-
-
-
-# btn_product = '//*[@id="ty_thmb_view"]/ul/li[16]/div[2]/div[2]/div/a/em[1]'
-#//*[@id="cdtl_cmt_tbody"]/tr[1]/td[1]/div/a/div[1]/span
+        replys = []
+        print('debug01',k)

@@ -1,9 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
 from konlpy.tag import Okt
-from keras_preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
 import pickle

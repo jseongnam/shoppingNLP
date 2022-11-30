@@ -1,27 +1,16 @@
-import numpy as np
-import matplotlib.pyplot as plt
 from keras.models import *
 from keras.layers import *
-
+import numpy as np
+from keras.callbacks import EarlyStopping
 X_train, X_test, Y_train, Y_test = np.load(
-    './reply_data_max_88_wordsize_11859.npy', allow_pickle = True)
+    './models/reply_data_max_88_wordsize_11859.npy', allow_pickle = True)
 print(X_train.shape, Y_train.shape)
 print(X_test.shape, Y_test.shape)
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
-# from konlpy.tag import Okt
-from keras_preprocessing.text import Tokenizer
-from keras_preprocessing.sequence import pad_sequences
-from keras.utils import to_categorical
-import pickle
-from keras.models import load_model
-from keras.callbacks import EarlyStopping
+
 early_stopping = EarlyStopping(patience = 3)
-my_dict = {}
-for i in range(10):
-    for j in range(5):
+my_dict = {} # evaluate 값 저장 dict
+for i in range(10): # batch_size 32배수로 training
+    for j in range(5): # kernel_size 바꾸면서 training
         model = Sequential()
         model.add(Embedding(28050, 300, input_length = 88))           # Embedding 안에는 wordsize 값.
         model.add(Conv1D(64, kernel_size = 7+j, padding='same', activation='relu'))
@@ -44,7 +33,3 @@ for i in range(10):
                             epochs=20, validation_data=(X_test, Y_test),callbacks = [early_stopping])
         model.save('./models/news_category_classification_model___{}_{}.h5'.format(32*(i+1),7+j))
         my_dict['batch_size = {}, kernel_size = {}'.format(32*(i+1),7+j)] =model.evaluate(X_test,Y_test)[1]
-    # plt.plot(fit_hist.history['accuracy'], label = 'accuracy')
-    # plt.plot(fit_hist.history['val_accuracy'], label = 'val_accuracy')
-    # plt.legend()
-    # plt.show()
