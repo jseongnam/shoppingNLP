@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-category = ['kids','book','refresh','sports']
+category = ['furniture','life','cloth']
 
 
 
@@ -19,13 +19,12 @@ options.add_argument("--disable-popup-blocking")
 driver = webdriver.Chrome('./chromedriver', options=options)
 df_reply = pd.DataFrame()
 replys = []
-urls = ['https://www.ssg.com/disp/category.ssg?dispCtgId=6000161215&page=',
-        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000210206&page=',
-        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000092893&page=',
-        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000204818&page=']
+urls = ['https://www.ssg.com/disp/category.ssg?dispCtgId=6000173396&page=',
+        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000174583&page=',
+        'https://www.ssg.com/disp/category.ssg?dispCtgId=6000188534&page=']
 
 for i in range(len(urls)):  # url
-    for k in range(1,4):   #page
+    for k in range(2,4):   #page
         url = urls[i]+str(k)
         print("url:",url)
         driver.get(url)
@@ -97,7 +96,7 @@ for i in range(len(urls)):  # url
                                             index = False)
             replys = []
             print('debug01',k)
-            break
+
 
 
 
