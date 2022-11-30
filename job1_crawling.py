@@ -24,7 +24,6 @@ urls = ['https://www.ssg.com/disp/category.ssg?dispCtgId=6000173396&page=',#furn
 for i in range(len(urls)):  # url
     for k in range(1,4):   #page
         url = urls[i]+str(k)
-        print("url:",url)
         driver.get(url)
         for j in range(1, 81): # product_count
             #product 클릭
@@ -71,7 +70,6 @@ for i in range(len(urls)):  # url
                             try:
                                 reply = '//*[@id="cdtl_cmt_tbody"]/tr[{}]/td[1]/div/a/div[1]/span'.format(l)    #댓글 xpath
                                 reply = driver.find_element('xpath', reply).text
-                                print(reply)
                                 reply = re.compile('[^가-힣]').sub(' ', reply)
                                 replys.append(reply)
                                 time.sleep(0.5)
@@ -93,4 +91,3 @@ for i in range(len(urls)):  # url
         df_title.to_csv('./crawling_data/crawling_data_{}_To_{}.csv'.format(category[i],k),
                                             index = False)
         replys = []
-        print('debug01',k)
