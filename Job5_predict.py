@@ -9,10 +9,10 @@ import zipfile
 import os
 os.environ['JAVA_HOME'] = r'C:\Program Files\Java\jdk-17.0.5\bin\server'
 print('JAVA_HOME' in os.environ)
-zipfile.ZipFile('./models/news_category_classification_model___96_9.zip').extractall('./models')
+# zipfile.ZipFile('./models/news_category_classification_model___96_9.zip').extractall('./models')
 pd.set_option('display.unicode.east_asian_width', True)
 pd.set_option('display.max_columns', 20)
-df = pd.read_csv('./crawling_data_2/crawling_data_concat_1.csv')
+df = pd.read_csv('./crawling_data_2/crawling_data.csv')
 print(df.head())
 df.info()
 
@@ -49,7 +49,7 @@ for i in range (len(tokened_X)):
 X_pad = pad_sequences(tokened_X, 88)
 
 
-model = load_model('./models/news_category_classification_model___96_9.h5')
+model = load_model('./models/reply_category_classification_model_0.753.h5')
 preds = model.predict(X_pad)
 label = encoder.classes_
 category_preds = []

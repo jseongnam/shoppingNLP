@@ -2,8 +2,9 @@ from keras.models import *
 from keras.layers import *
 import numpy as np
 from keras.callbacks import EarlyStopping
+
 X_train, X_test, Y_train, Y_test = np.load(
-    './models/reply_data_max_88_wordsize_11859.npy', allow_pickle = True)
+    './models/reply_data_max_88_wordsize_9835.npy', allow_pickle = True)
 print(X_train.shape, Y_train.shape)
 print(X_test.shape, Y_test.shape)
 
@@ -12,7 +13,7 @@ my_dict = {} # evaluate 값 저장 dict
 for i in range(10): # batch_size 32배수로 training
     for j in range(5): # kernel_size 바꾸면서 training
         model = Sequential()
-        model.add(Embedding(28050, 300, input_length = 88))           # Embedding 안에는 wordsize 값.
+        model.add(Embedding(21001, 300, input_length = 88))           # Embedding 안에는 wordsize 값.
         model.add(Conv1D(64, kernel_size = 7+j, padding='same', activation='relu'))
         model.add(MaxPool1D(pool_size = 1))
         model.add(GRU(128, activation='tanh', return_sequences=True))
