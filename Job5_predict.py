@@ -6,7 +6,9 @@ from keras.utils import to_categorical
 import pickle
 from keras.models import load_model
 import zipfile
-
+import os
+os.environ['JAVA_HOME'] = r'C:\Program Files\Java\jdk-17.0.5\bin\server'
+print('JAVA_HOME' in os.environ)
 zipfile.ZipFile('./models/news_category_classification_model___96_9.zip').extractall('./models')
 pd.set_option('display.unicode.east_asian_width', True)
 pd.set_option('display.max_columns', 20)
@@ -68,3 +70,4 @@ print(df.head(30))
 print(df['OX'].value_counts())
 print(df['OX'].mean())
 print(df.loc[df['OX']==False])
+print('debug01')
