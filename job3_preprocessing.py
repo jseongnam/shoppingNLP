@@ -8,13 +8,14 @@ from sklearn.preprocessing import LabelEncoder
 from keras.utils.np_utils import to_categorical
 import pickle
 pd.set_option('display.unicode.east_asian_width', True)
-df = pd.read_csv('./crawling_data_2/crawling_data_concat_1.csv')
+df = pd.read_csv('./crawling_data_2/crawling_data.csv')
 print(df.head(10))
 print(df.category.value_counts())
 df.info()
 
 X = df['reply']
 Y = df['category']
+print(Y)
 
 encoder = LabelEncoder()
 labeled_Y = encoder.fit_transform(Y)
@@ -48,6 +49,7 @@ token = Tokenizer()
 token.fit_on_texts(X)
 tokened_X = token.texts_to_sequences(X)
 wordsize = len(token.word_index) + 1
+print(wordsize)
 with open('./models/reply_token.pickle', 'wb') as f:
     pickle.dump(token, f)
 
